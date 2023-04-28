@@ -23,8 +23,12 @@ export const authOptions = {
 
       return session;
     }
-  }
-
+  },
+  pages: {
+    signIn: '/auth/signin',
+  },
+  // Para pagina de Sign customizada usando o signIn() é necessário a secret
+  secret: process.env.JWT_SECRET as string,
 }
 
 // O next auth faz um gestão de autenticação utilizando os cookies!
