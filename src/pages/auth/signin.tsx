@@ -3,9 +3,12 @@ import { getProviders, signIn } from "next-auth/react"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
 export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   //Usado ref para evitar rerenders no onChange dos inputs
   // Ideal seria criar um formulário para isso, entretanto não é o intuito desse projeto trabalhar com essa questão.
   const emailRef = useRef('');
@@ -17,43 +20,53 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
     // Aqui faremos o trabalho de buscar autenticar com o email e senha passados!
   }
 
-  const onRegister = () => {
-    // Aqui o usuário vai poder se cadastrar dentro do sistema!
-    // Lembrar que se o usuário entrar com alguma das opçoes de oAuth ele já teria um cadastro com o email da conta
-    // Logo ele deve ser barrado de tentar usar o mesmo email de acesso!
-  }
+  const onRegister = () => router.push('/accounts/register');
 
   return (
-    <main className="flex items-center justify-center h-screen w-screen bg-gradient-to-br from-cyan-300 to-sky-600">
-      <div className="bg-white rounded-lg flex flex-col items-center justify-center w-2/6 gap-2 shadow-2xl">
-        <div className="px-7 py-4 shadow flex flex-col gap-4 w-full">
-          <p>Email</p>
-          <input
-            onChange={(event) => emailRef.current = event.target.value}
-            className="border rounded-md p-2 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
-            type="text"
-          />
-          <p>Senha</p>
-          <input
-            onChange={(event) => passwordRef.current = event.target.value}
-            className="border rounded-md p-2 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
-            type="text"
-          />
-          <button className="p-2 rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg" type="submit" onClick={onSubmit}>Entrar</button>
-          <button className="p-2 rounded-md border bg-gradient-to-tr from-purple-600 to-purple-500 text-white font-bold text-lg" type="submit" onClick={onRegister}>Cadastrar</button>
+    <>
+      <Head><title>Login</title></Head>
+      <main className="flex items-center justify-center h-screen w-screen bg-gradient-to-br from-cyan-300 to-sky-600">
+        <div className="bg-white rounded-lg flex flex-col items-center justify-center w-2/6 py-10 gap-2 shadow-2xl">
+          <h1 className="text-2xl font-bold text-purple-600 drop-shadow-md">ÁREA DE LOGIN</h1>
+          <div className="px-7 py-4 flex flex-col gap-4 w-full">
+            <p>Email</p>
+            <input
+              onChange={(event) => emailRef.current = event.target.value}
+              className="border rounded-md p-2 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
+              type="text"
+            />
+            <p>Senha</p>
+            <input
+              onChange={(event) => passwordRef.current = event.target.value}
+              className="border rounded-md p-2 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
+              type="text"
+            />
+            <button className="p-2 rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg" type="submit" onClick={onSubmit}>
+              Entrar
+            </button>
+            <button className="p-2 rounded-md border border-purple-600 text-purple-600 font-bold text-lg" type="submit" onClick={onRegister}>
+              Cadastrar
+            </button>
+          </div>
+          <div className="px-7 flex flex-col gap-4 w-full">
+            <h3 className="mx-auto text-xl">Ou</h3>
+            {Object.values(providers).map((provider) => (
+              <button
+                key={provider.name}
+                className=" flex justify-center p-2 rounded-md border bg-gradient-to-tr from-cyan-300 to-sky-600 text-white font-bold text-lg"
+                onClick={() => signIn(provider.id)}
+              >
+                <Image className="mr-6" src={`/${provider.id}.png`} width={30} height={30} alt={`${provider.id} image`} />
+                Entrar com {provider.name}
+              </button>
+            ))}
+            <button className="p-2 rounded-md border border-sky-600 text-sky-600 font-bold text-lg" type="submit" onClick={() => router.push('/')}>
+              Entrar como Anônimo
+            </button>
+          </div>
         </div>
-        {Object.values(providers).map((provider) => (
-          <button
-            key={provider.name}
-            className="flex justify-center items-center m-3 border border-black rounded-lg p-2 w-6/12 hover:bg-slate-400"
-            onClick={() => signIn(provider.id)}
-          >
-            <Image className="mr-6" src={`/${provider.id}.png`} width={30} height={30} alt={`${provider.id} image`} />
-            Entrar com {provider.name}
-          </button>
-        ))}
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
 
