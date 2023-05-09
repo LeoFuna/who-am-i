@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     });
 
-    await db.avatar.create({ data: { userId: user.id, avatarUrl } });
+    // await db.avatar.create({ data: { userId: user.id, avatarUrl } });
 
     return res.status(201).end();
   }

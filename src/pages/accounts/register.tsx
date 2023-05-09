@@ -27,13 +27,13 @@ const Register = () => {
   const onRegister = async () => {
     if (passwordRef.current !== retypePasswordRef.current) return alert('Senhas não são idênticas!');
 
-    const imageBase64 = await convertImageFileToBase64(avatarRef.current);
+    // const imageBase64 = await convertImageFileToBase64(avatarRef.current);
 
     const body = {
       email: emailRef.current,
       password: passwordRef.current,
       displayName: fullName.current,
-      avatarUrl: imageBase64,
+      // avatarUrl: imageBase64,
     }
     const request = new Request('/api/accounts', getOptions(body));
     const response = await fetch(request)
