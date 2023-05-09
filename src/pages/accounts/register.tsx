@@ -31,7 +31,7 @@ const Register = () => {
       password: passwordRef.current,
       displayName: fullName.current,
     }
-    const request = new Request(`${process.env.NEXT_URL}/api/accounts`, getOptions(body));
+    const request = new Request('/api/accounts', getOptions(body));
     const response = await fetch(request)
       .then(data => data)
       .catch(error => error);
