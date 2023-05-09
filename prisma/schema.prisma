@@ -16,13 +16,10 @@ model User {
   email       String   @unique
   password    String
   createdAt   DateTime @default(now())
-
-  avatar Avatar?
 }
 
 model Avatar {
   id        String @id @default(cuid())
   avatarUrl String @db.LongText
   userId    String @unique
-  user      User   @relation(fields: [userId], references: [id])
 }
