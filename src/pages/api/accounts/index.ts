@@ -15,8 +15,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   await cors(req, res);
 
   if (req.method === 'GET') {
-    // const users = await db.user.findMany({})
-    // return res.json(users);
+    const users = await db.user.findMany({})
+    return res.json(users);
   }
 
   if (req.method === 'POST') {
