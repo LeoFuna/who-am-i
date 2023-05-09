@@ -1,8 +1,13 @@
-import db from './../../../../prisma/db';
+// import db from './../../../../prisma/db';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
 import bcrypt from 'bcrypt';
 import { initMiddleware, parseBody } from '@/utils/core.utils';
+
+import { PrismaClient } from '@prisma/client';
+
+const db = new PrismaClient();
+
 
 // Initialize the cors middleware
 const cors = initMiddleware(
@@ -13,12 +18,11 @@ const cors = initMiddleware(
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await cors(req, res);
-  await db.$disconnect();
 
   if (req.method === 'GET') {
-    // const users = await db.user.findMany({});
-    // await db.$disconnect();
-    // return res.json(users);
+    const users = await db.user.findMany({});
+    await db.$disconnect();
+    return res.json(users);
   }
 
   if (req.method === 'POST') {
