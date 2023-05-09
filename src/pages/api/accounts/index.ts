@@ -1,4 +1,4 @@
-// import db from './../../../../prisma/db';
+import db from './../../../../prisma/db';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
 import bcrypt from 'bcrypt';
