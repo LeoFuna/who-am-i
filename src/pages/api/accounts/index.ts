@@ -20,22 +20,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'POST') {
-    const { avatarUrl, ...rest } = parseBody(req.body);
-    const encryptedPassword = await bcrypt.hash(rest.password, 10);
-
-    const emailAlreadyRegistered = await db.user.findUnique({ where: { email: rest.email } });
-    if (!!emailAlreadyRegistered) return res.status(409).end();
-
-    const user = await db.user.create({
-      data: {
-        ...rest,
-        password: encryptedPassword,
-      }
-    });
-
-    // await db.avatar.create({ data: { userId: user.id, avatarUrl } });
-
-    return res.status(201).end();
+    try {
+      const { avatarUrl, ...rest } = parseBody(req.body);
+      const encryptedPassword = await bcrypt.hash(rest.password, 10);
+  
+      const emailAlreadyRegistered = await db.user.findUnique({ where: { email: rest.email } });
+      if (!!emailAlreadyRegistered) return res.status(409).end();
+  
+      const user = await db.user.create({
+        data: {
+          ...rest,
+          password: encryptedPassword,
+        }
+      });
+  
+      // await db.avatar.create({ data: { userId: user.id, avatarUrl } });
+  
+      return res.status(201).end();
+    } catch(e: any) {
+      return res.status(400).json({ message: e.message });
+    }
   }
 
   return res.status(405).json({ message: 'Method not allowed' });
