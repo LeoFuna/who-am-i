@@ -1,3 +1,4 @@
+import { convertImageFileToBase64 } from '@/utils/file.utils';
 import { Roboto } from 'next/font/google';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -26,10 +27,13 @@ const Register = () => {
   const onRegister = async () => {
     if (passwordRef.current !== retypePasswordRef.current) return alert('Senhas não são idênticas!');
 
+    const imageBase64 = await convertImageFileToBase64(avatarRef.current);
+
     const body = {
       email: emailRef.current,
       password: passwordRef.current,
       displayName: fullName.current,
+      avatarUrl: imageBase64,
     }
     const request = new Request('/api/accounts', getOptions(body));
     const response = await fetch(request)
