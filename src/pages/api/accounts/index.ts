@@ -12,7 +12,6 @@ const cors = initMiddleware(
 );
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  return res.status(405).json({ message: 'Method not allowed' });
   await cors(req, res);
 
   if (req.method === 'GET') {
