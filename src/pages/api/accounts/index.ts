@@ -7,7 +7,7 @@ import { initMiddleware, parseBody } from '@/utils/core.utils';
 // Initialize the cors middleware
 const cors = initMiddleware(
   Cors({
-    methods: ['GET', 'OPTIONS'],
+    methods: ['GET', 'POST', 'OPTIONS'],
   })
 );
 
