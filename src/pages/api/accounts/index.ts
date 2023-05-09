@@ -13,9 +13,11 @@ const cors = initMiddleware(
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await cors(req, res);
+  await db.$disconnect();
 
   if (req.method === 'GET') {
-    // const users = await db.user.findMany({})
+    // const users = await db.user.findMany({});
+    // await db.$disconnect();
     // return res.json(users);
   }
 
