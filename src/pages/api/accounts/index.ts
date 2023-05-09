@@ -20,21 +20,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'POST') {
-    const parsedBody = parseBody(req.body);
-    const encryptedPassword = await bcrypt.hash(parsedBody.password, 10);
+    const { avatarUrl, ...rest } = parseBody(req.body);
+    const encryptedPassword = await bcrypt.hash(rest.password, 10);
 
-    const emailAlreadyRegistered = await db.user.findUnique({ where: { email: parsedBody.email } });
+    const emailAlreadyRegistered = await db.user.findUnique({ where: { email: rest.email } });
     if (!!emailAlreadyRegistered) return res.status(409).end();
 
-    await db.user.create({
+    const user = await db.user.create({
       data: {
-        ...parsedBody,
+        ...rest,
         password: encryptedPassword,
-        // avatar: {
-        //   avatarUrl: parsedBody.avatarUrl,
-        // }
       }
-    })
+    });
+
+    await db.avatar.create({ data: { userId: user.id, avatarUrl } });
 
     return res.status(201).end();
   }
