@@ -2,12 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
   relationMode = "prisma"
 }
 
@@ -16,11 +17,13 @@ model User {
   displayName String
   email       String   @unique
   password    String
+  avatarId    String?  @unique
+  avatar      Avatar?  @relation(fields: [avatarId], references: [id])
   createdAt   DateTime @default(now())
 }
 
 model Avatar {
   id        String @id @default(cuid())
   avatarUrl String @db.LongText
-  userId    String @unique
+  user      User?
 }

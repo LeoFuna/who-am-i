@@ -28,14 +28,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const emailAlreadyRegistered = await db.user.findUnique({ where: { email: rest.email } });
       if (!!emailAlreadyRegistered) return res.status(409).end();
   
-      const user = await db.user.create({
+      await db.user.create({
         data: {
           ...rest,
           password: encryptedPassword,
-        }
+          avatar: {
+            create: {
+              avatarUrl,
+            },
+          },
+        },
       });
-  
-      await db.avatar.create({ data: { userId: user.id, avatarUrl } });
   
       return res.status(201).end();
     } catch(e: any) {
