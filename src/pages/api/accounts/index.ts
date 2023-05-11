@@ -1,13 +1,8 @@
-// import db from './../../../../prisma/db';
+import db from './../../../../prisma/db';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
 import bcrypt from 'bcrypt';
 import { initMiddleware, parseBody } from '@/utils/core.utils';
-
-import { PrismaClient } from '@prisma/client';
-
-const db = new PrismaClient();
-
 
 // Initialize the cors middleware
 const cors = initMiddleware(
@@ -21,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'GET') {
     const users = await db.user.findMany({});
-    await db.$disconnect();
+
     return res.json(users);
   }
 
@@ -30,17 +25,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { avatarUrl, ...rest } = parseBody(req.body);
       const encryptedPassword = await bcrypt.hash(rest.password, 10);
   
-      // const emailAlreadyRegistered = await db.user.findUnique({ where: { email: rest.email } });
-      // if (!!emailAlreadyRegistered) return res.status(409).end();
+      const emailAlreadyRegistered = await db.user.findUnique({ where: { email: rest.email } });
+      if (!!emailAlreadyRegistered) return res.status(409).end();
   
-      // const user = await db.user.create({
-      //   data: {
-      //     ...rest,
-      //     password: encryptedPassword,
-      //   }
-      // });
+      const user = await db.user.create({
+        data: {
+          ...rest,
+          password: encryptedPassword,
+        }
+      });
   
-      // await db.avatar.create({ data: { userId: user.id, avatarUrl } });
+      await db.avatar.create({ data: { userId: user.id, avatarUrl } });
   
       return res.status(201).end();
     } catch(e: any) {
