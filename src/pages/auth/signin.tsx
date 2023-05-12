@@ -28,16 +28,16 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
         <div className="bg-white rounded-lg flex flex-col items-center justify-center lg:w-2/6 w-5/6 py-10 lg:py-6 gap-2 shadow-2xl">
           <h1 className="text-2xl font-bold text-purple-600 drop-shadow-md">ÁREA DE LOGIN</h1>
           <div className="px-7 py-4 flex flex-col gap-4 w-full">
-            <p>Email</p>
+            <p className="text-slate-800">Email</p>
             <input
               onChange={(event) => emailRef.current = event.target.value}
-              className="border rounded-md p-2 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
+              className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
               type="text"
             />
-            <p>Senha</p>
+            <p className="text-slate-800">Senha</p>
             <input
               onChange={(event) => passwordRef.current = event.target.value}
-              className="border rounded-md p-2 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
+              className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
               type="text"
             />
             <button className="p-2 rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg" type="submit" onClick={onSubmit}>
