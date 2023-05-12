@@ -49,7 +49,7 @@ const Register = () => {
     <>
       <Head><title>Cadastro</title></Head>
       <main className={`flex items-center justify-center h-screen w-screen bg-gradient-to-br from-cyan-300 to-sky-600 ${inter.className}`}>
-        <div className="bg-white rounded-lg flex flex-col items-center justify-center w-2/6 py-10 gap-2 shadow-2xl">
+        <div className="bg-white rounded-lg flex flex-col items-center justify-center lg:w-2/6 w-5/6 py-10 lg:py-2 gap-2 shadow-2xl">
           <h1 className="text-2xl font-bold text-purple-600 drop-shadow-md">CADASTRO</h1>
           <div className="px-7 py-4 flex flex-col gap-4 w-full">
             <p>Nome Completo</p>

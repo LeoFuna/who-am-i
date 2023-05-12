@@ -20,8 +20,8 @@ export default function Home() {
     <>
       <Head><title>Home</title></Head>
       <main className={`flex flex-col items-center justify-center h-screen w-screen bg-gradient-to-br from-cyan-300 to-sky-600 ${inter.className}`}>
-        <h1 className='text-4xl text-white drop-shadow'>Olá você é <span className='font-bold'>{session?.user?.name || 'Anônimo'}</span></h1>
-        <h2 className='text-xl text-white m-4 drop-shadow'>{getQuestion(!!session)}</h2>
+        <h1 className='text-xl lg:text-4xl text-white drop-shadow'>Olá você é <span className='font-bold'>{session?.user?.name || 'Anônimo'}</span></h1>
+        <h2 className='text-lg lg:text-xl text-white m-4 drop-shadow'>{getQuestion(!!session)}</h2>
         <div className={styles.buttonsDiv}>
           {!!session && <button className={styles.button} disabled={!session} onClick={() => router.push('/users')}>Sim</button>}
           <button className={styles.buttonLogout} onClick={() => handleLogout(router)}>{getSignoutButtonText(!!session)}</button>

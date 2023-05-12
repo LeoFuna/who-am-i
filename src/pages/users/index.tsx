@@ -32,7 +32,7 @@ function Users({ avatarUrl }: InferGetServerSidePropsType<typeof getServerSidePr
     <>
       <Head><title>Detalhes</title></Head>
       <div className={`flex items-center justify-center h-screen w-screen bg-gradient-to-br from-cyan-300 to-sky-600 ${inter.className}`}>
-        <main className='bg-white rounded-lg flex flex-col items-center justify-center w-2/6 py-10 gap-2 shadow-2xl'>
+        <main className='bg-white rounded-lg flex flex-col items-center justify-center lg:w-2/6 w-5/6 py-10 gap-2 shadow-2xl'>
           {(!!avatarUrl || !!session?.user?.image) &&
             <Image
               src={session?.user?.image || avatarUrl}
