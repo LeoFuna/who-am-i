@@ -4,5 +4,11 @@ import { Session } from 'next-auth';
 declare module 'next-auth' {
   interface Session {
     loginTime: string;
+    user: {
+      id: string,
+      name: string,
+      image?: string,
+      email: string,
+    },
   }
 }
