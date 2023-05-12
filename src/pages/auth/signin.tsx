@@ -9,15 +9,14 @@ import { useRouter } from "next/router";
 
 export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+  const oAuthProviders = Object.values(providers).filter(provider => provider.id !== 'credentials');
   //Usado ref para evitar rerenders no onChange dos inputs
   // Ideal seria criar um formulário para isso, entretanto não é o intuito desse projeto trabalhar com essa questão.
   const emailRef = useRef('');
   const passwordRef = useRef('');
 
   const onSubmit = () => {
-    console.log(emailRef.current)
-    console.log(passwordRef.current)
-    // Aqui faremos o trabalho de buscar autenticar com o email e senha passados!
+    signIn('credentials', { email: emailRef.current, password: passwordRef.current, callbackUrl: '/' });
   }
 
   const onRegister = () => router.push('/accounts/register');
@@ -50,7 +49,7 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
           </div>
           <div className="px-7 flex flex-col gap-4 w-full">
             <h3 className="mx-auto text-xl">Ou</h3>
-            {Object.values(providers).map((provider) => (
+            {oAuthProviders.map((provider) => (
               <button
                 key={provider.name}
                 className=" flex justify-center p-2 rounded-md border bg-gradient-to-tr from-cyan-300 to-sky-600 text-white font-bold text-lg"
