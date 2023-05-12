@@ -11,6 +11,15 @@ const cors = initMiddleware(
   })
 );
 
+//Usado para aumentar o limite do body de 1mb (default) para 4mb
+export const config = {
+  api: {
+      bodyParser: {
+          sizeLimit: '4mb'
+      }
+  }
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await cors(req, res);
 
