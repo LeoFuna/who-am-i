@@ -1,9 +1,10 @@
+import Spinner from '@/components/Spinner';
 import { convertImageFileToBase64 } from '@/utils/file.utils';
 import { getMsgOnValidateError } from '@/utils/register.utils';
 import { Roboto } from 'next/font/google';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const inter = Roboto({ weight: '400', subsets: ['latin'] })
 
@@ -17,15 +18,16 @@ const getOptions = (body: any) => ({
 
 const Register = () => {
   const router = useRouter();
+  const [isRegistering, setIsRegistering] = useState(false);
   const fullNameRef = useRef('');
   const avatarRef = useRef<File>();
   const emailRef = useRef('');
   const passwordRef = useRef('');
   const retypePasswordRef = useRef('');
   // Melhorar gestao de erro
-  // Loading na criaçao e carregamento...
   //Em mobile ele nao cadastra...
   const onRegister = async () => {
+    setIsRegistering(true);
     const errorMessage = getMsgOnValidateError({
       email: emailRef.current,
       fullName: fullNameRef.current,
@@ -34,7 +36,10 @@ const Register = () => {
       avatar: avatarRef.current,
     })
 
-    if (!!errorMessage) return alert(errorMessage);
+    if (!!errorMessage) {
+      setIsRegistering(false);
+      return alert(errorMessage);
+    }
 
     const imageBase64 = await convertImageFileToBase64(avatarRef.current);
 
@@ -53,6 +58,8 @@ const Register = () => {
       router.push('/auth/signin');
     } catch (e: any) {
       alert(e.message)
+    } finally {
+      setIsRegistering(false);
     }
   }
 
@@ -102,13 +109,17 @@ const Register = () => {
               type="text"
             />
             <button
-              className="p-2 rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg"
+              className="p-2 flex justify-center rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg"
               type="submit"
               onClick={onRegister}
             >
-              Cadastrar
+              {isRegistering ? <Spinner className='ml-4 float-right' /> : 'Cadastrar'} 
             </button>
-            <button className="p-2 rounded-md border border-purple-600 text-purple-600 font-bold text-lg" type="submit" onClick={() => router.push('/auth/signin')}>
+            <button
+              className="p-2 rounded-md border border-purple-600 text-purple-600 font-bold text-lg"
+              type="submit"
+              onClick={() => router.push('/auth/signin')}
+            >
               Voltar
             </button>
           </div>
