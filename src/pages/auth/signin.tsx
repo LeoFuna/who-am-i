@@ -15,7 +15,9 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
   const emailRef = useRef('');
   const passwordRef = useRef('');
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    if (!emailRef.current.trim()) return alert('Email deve ser preenchido com algo!');
+    if (!passwordRef.current.trim()) return alert('Favor informar a senha...');
     signIn('credentials', { email: emailRef.current, password: passwordRef.current, callbackUrl: '/' });
   }
 
@@ -28,6 +30,7 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
         <div className="bg-white rounded-lg flex flex-col items-center justify-center lg:w-2/6 w-5/6 py-10 lg:py-6 gap-2 shadow-2xl">
           <h1 className="text-2xl font-bold text-purple-600 drop-shadow-md">ÁREA DE LOGIN</h1>
           <div className="px-7 py-4 flex flex-col gap-4 w-full">
+            {!!router?.query?.error && <p className="text-red-600 text-center">!! Usuário ou senha inválidos !!</p>}
             <p className="text-slate-800">Email</p>
             <input
               onChange={(event) => emailRef.current = event.target.value}
