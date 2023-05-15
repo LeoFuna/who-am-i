@@ -1,4 +1,5 @@
 import Spinner from '@/components/Spinner';
+import TextInput from '@/components/TextInput';
 import { convertImageFileToBase64 } from '@/utils/file.utils';
 import { getMsgOnValidateError } from '@/utils/register.utils';
 import { Roboto } from 'next/font/google';
@@ -70,12 +71,7 @@ const Register = () => {
         <div className="bg-white rounded-lg flex flex-col items-center justify-center lg:w-2/6 w-5/6 py-10 lg:py-2 gap-2 shadow-2xl">
           <h1 className="text-2xl font-bold text-purple-600 drop-shadow-md">CADASTRO</h1>
           <div className="px-7 py-4 flex flex-col gap-4 w-full">
-            <p className='text-slate-800'>Nome Completo</p>
-            <input
-              onChange={(event) => fullNameRef.current = event.target.value}
-              className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
-              type="text"
-            />
+            <TextInput inputRef={fullNameRef} label='Nome Completo' />
             <p className='text-slate-800'>Suba um Avatar</p>
             <input
               onChange={(event) => {
@@ -90,24 +86,9 @@ const Register = () => {
               type="file"
               accept='.png, .jpeg'
             />
-            <p className='text-slate-800'>Informe o email</p>
-            <input
-              onChange={(event) => emailRef.current = event.target.value}
-              className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
-              type="text"
-            />
-            <p className='text-slate-800'>Informe a senha</p>
-            <input
-              onChange={(event) => passwordRef.current = event.target.value}
-              className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
-              type="text"
-            />
-            <p className='text-slate-800'>Confirmar senha</p>
-            <input
-              onChange={(event) => retypePasswordRef.current = event.target.value}
-              className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
-              type="text"
-            />
+            <TextInput inputRef={emailRef} label='Informe o email' />
+            <TextInput inputRef={passwordRef} label='Informe a senha' />
+            <TextInput inputRef={retypePasswordRef} label='Confirmar senha' />
             <button
               className="p-2 flex justify-center rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg"
               type="submit"

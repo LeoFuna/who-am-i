@@ -1,11 +1,27 @@
 import type { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { getProviders, signIn } from "next-auth/react"
+import { ClientSafeProvider, getProviders, signIn } from "next-auth/react"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]";
 import Image from "next/image";
 import { useRef } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import TextInput from "@/components/TextInput";
+
+type RenderProvidersProps = { oAuthProviders: ClientSafeProvider[] }
+
+const renderProviders = ({ oAuthProviders }: RenderProvidersProps) => {
+  return oAuthProviders.map((provider) => (
+      <button
+        key={provider.name}
+        className=" flex justify-center p-2 rounded-md border bg-gradient-to-tr from-cyan-300 to-sky-600 text-white font-bold text-lg"
+        onClick={() => signIn(provider.id)}
+      >
+        <Image className="mr-6" src={`/${provider.id}.png`} width={30} height={30} alt={`${provider.id} image`} />
+        Entrar com {provider.name}
+      </button>
+    ))
+}
 
 export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
@@ -31,18 +47,8 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
           <h1 className="text-2xl font-bold text-purple-600 drop-shadow-md">ÁREA DE LOGIN</h1>
           <div className="px-7 py-4 flex flex-col gap-4 w-full">
             {!!router?.query?.error && <p className="text-red-600 text-center">!! Usuário ou senha inválidos !!</p>}
-            <p className="text-slate-800">Email</p>
-            <input
-              onChange={(event) => emailRef.current = event.target.value}
-              className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
-              type="text"
-            />
-            <p className="text-slate-800">Senha</p>
-            <input
-              onChange={(event) => passwordRef.current = event.target.value}
-              className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
-              type="text"
-            />
+            <TextInput inputRef={emailRef} label='Email' />
+            <TextInput inputRef={passwordRef} label='Senha' />
             <button className="p-2 rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg" type="submit" onClick={onSubmit}>
               Entrar
             </button>
@@ -52,16 +58,7 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
           </div>
           <div className="px-7 flex flex-col gap-4 w-full">
             <h3 className="mx-auto text-xl">Ou</h3>
-            {oAuthProviders.map((provider) => (
-              <button
-                key={provider.name}
-                className=" flex justify-center p-2 rounded-md border bg-gradient-to-tr from-cyan-300 to-sky-600 text-white font-bold text-lg"
-                onClick={() => signIn(provider.id)}
-              >
-                <Image className="mr-6" src={`/${provider.id}.png`} width={30} height={30} alt={`${provider.id} image`} />
-                Entrar com {provider.name}
-              </button>
-            ))}
+            { renderProviders({ oAuthProviders }) }
             <button className="p-2 rounded-md border border-sky-600 text-sky-600 font-bold text-lg" type="submit" onClick={() => router.push('/')}>
               Entrar como Anônimo
             </button>
