@@ -16,13 +16,19 @@ const getOptions = (body: any) => ({
 
 const Register = () => {
   const router = useRouter();
-  const fullName = useRef('');
+  const fullNameRef = useRef('');
   const avatarRef = useRef<File>();
   const emailRef = useRef('');
   const passwordRef = useRef('');
   const retypePasswordRef = useRef('');
-  // Fazer validaçao básica dos formulários!!!
+  // Melhorar gestao de erro
+  // Loading na criaçao e carregamento...
+  //Em mobile ele nao cadastra...
   const onRegister = async () => {
+    if (fullNameRef.current.trim().length < 3) return alert('Nome deve ter pelo menos 4 caracteres!');
+    if (!avatarRef.current) return alert('Necessário um avatar');
+    if (!emailRef.current.trim()) return alert('Email deve ser preenchido com algo!');
+    if (!passwordRef.current.trim()) return alert('Favor informar a senha...');
     if (passwordRef.current !== retypePasswordRef.current) return alert('Senhas não são idênticas!');
 
     const imageBase64 = await convertImageFileToBase64(avatarRef.current);
@@ -30,7 +36,7 @@ const Register = () => {
     const body = {
       email: emailRef.current,
       password: passwordRef.current,
-      displayName: fullName.current,
+      displayName: fullNameRef.current,
       avatarUrl: imageBase64,
     }
     const request = new Request('/api/accounts', getOptions(body));
@@ -38,9 +44,9 @@ const Register = () => {
       const response = await fetch(request).then(data => data);
 
       if (response.status === 409) return alert('Email já em uso!');
-  
+
       router.push('/auth/signin');
-    } catch(e: any) {
+    } catch (e: any) {
       alert(e.message)
     }
   }
@@ -54,7 +60,7 @@ const Register = () => {
           <div className="px-7 py-4 flex flex-col gap-4 w-full">
             <p className='text-slate-800'>Nome Completo</p>
             <input
-              onChange={(event) => fullName.current = event.target.value}
+              onChange={(event) => fullNameRef.current = event.target.value}
               className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
               type="text"
             />
@@ -90,7 +96,11 @@ const Register = () => {
               className="border rounded-md p-2 text-slate-800 focus:outline-none focus:shadow-md focus:shadow-sky-600 focus:border-sky-600"
               type="text"
             />
-            <button className="p-2 rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg" type="submit" onClick={onRegister}>
+            <button
+              className="p-2 rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg"
+              type="submit"
+              onClick={onRegister}
+            >
               Cadastrar
             </button>
             <button className="p-2 rounded-md border border-purple-600 text-purple-600 font-bold text-lg" type="submit" onClick={() => router.push('/auth/signin')}>
