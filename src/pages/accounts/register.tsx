@@ -25,8 +25,7 @@ const Register = () => {
   const emailRef = useRef('');
   const passwordRef = useRef('');
   const retypePasswordRef = useRef('');
-  // Melhorar gestao de erro
-  //Em mobile ele nao cadastra...
+
   const onRegister = async () => {
     setIsRegistering(true);
     const errorMessage = getMsgOnValidateError({
