@@ -1,4 +1,5 @@
 import { convertImageFileToBase64 } from '@/utils/file.utils';
+import { getMsgOnValidateError } from '@/utils/register.utils';
 import { Roboto } from 'next/font/google';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -25,11 +26,15 @@ const Register = () => {
   // Loading na criaçao e carregamento...
   //Em mobile ele nao cadastra...
   const onRegister = async () => {
-    if (fullNameRef.current.trim().length < 3) return alert('Nome deve ter pelo menos 4 caracteres!');
-    if (!avatarRef.current) return alert('Necessário um avatar');
-    if (!emailRef.current.trim()) return alert('Email deve ser preenchido com algo!');
-    if (!passwordRef.current.trim()) return alert('Favor informar a senha...');
-    if (passwordRef.current !== retypePasswordRef.current) return alert('Senhas não são idênticas!');
+    const errorMessage = getMsgOnValidateError({
+      email: emailRef.current,
+      fullName: fullNameRef.current,
+      password: passwordRef.current,
+      retypePassword: retypePasswordRef.current,
+      avatar: avatarRef.current,
+    })
+
+    if (!!errorMessage) return alert(errorMessage);
 
     const imageBase64 = await convertImageFileToBase64(avatarRef.current);
 
