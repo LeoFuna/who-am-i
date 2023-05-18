@@ -39,9 +39,9 @@ npm install
 
 Configurando variáveis de ambiente
 
-* Ir no seu github pegar as credenciais necessárias de oAuth.
-* Ir no seu google cloud e pegar as credenciais de oAuth.
-* Informar a URL do banco de dados local mySQL.
+* Ir no seu `github` pegar as credenciais necessárias de `oAuth`.
+* Ir no seu `google cloud` e pegar as credenciais de `oAuth`.
+* Informar a `URL` do banco de dados local `mySQL`.
 
 Rodando as migrations
 ```bash
