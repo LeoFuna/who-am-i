@@ -10,7 +10,7 @@ O foco do projeto é gerencias locais onde o usuário pode ou não ter acesso.
 * [Começando](#começando)
 * [Estrutura do projeto](#estrutura-do-projeto)
 * [Fases do Desenvolvimento](#fases-do-desenvolvimento)
-* [Aplicação](#aplicação)
+* [Detalhes da Aplicação](#detalhes-da-aplicação)
 
 ## Ferramentas Utilizadas
 * Next JS
@@ -90,7 +90,7 @@ prisma/                 # Arquivos relacionados ao ORM do Prisma
 - [x] Subir o projeto na Vercel
 - [x] Ajustar a documentação do projeto
 
-## Aplicação
+## Detalhes da Aplicação
 
 Página de Login Customizada
 
