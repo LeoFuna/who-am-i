@@ -24,7 +24,7 @@ function Users({ avatarUrl }: InferGetServerSidePropsType<typeof getServerSidePr
   const router = useRouter();
   const userAgent = navigator.userAgent;
 
-  if (!session?.user) return <main className={`flex text-5xl text-white items-center justify-center h-screen w-screen bg-gradient-to-br from-cyan-300 to-sky-600 ${inter.className}`}>Página protegida, Redirecionando...</main>
+  if (!session?.user) return <main className={`flex text-5xl text-white items-center justify-center h-screen w-screen bg-gradient-to-br from-cyan-300 to-sky-600`}>Página protegida, Redirecionando...</main>
   return (
     <>
       <Head><title>Detalhes</title></Head>
