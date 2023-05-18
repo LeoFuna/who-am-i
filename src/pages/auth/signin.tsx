@@ -48,7 +48,7 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
           <div className="px-7 py-4 flex flex-col gap-4 w-full">
             {!!router?.query?.error && <p className="text-red-600 text-center">!! Usuário ou senha inválidos !!</p>}
             <TextInput inputRef={emailRef} label='Email' />
-            <TextInput inputRef={passwordRef} label='Senha' />
+            <TextInput inputRef={passwordRef} label='Senha' type='password' />
             <button className="p-2 rounded-md border bg-gradient-to-tr from-purple-500 to-purple-600 text-white font-bold text-lg" type="submit" onClick={onSubmit}>
               Entrar
             </button>
