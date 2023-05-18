@@ -39,6 +39,9 @@ export const authOptions: AuthOptions = {
     secret: process.env.JWT_SECRET,
     maxAge: ONE_DAY,
   },
+  session: {
+    maxAge: ONE_DAY,
+  },
   callbacks: {
     async jwt({ token, user }: any) {
       if (user) { token.id = user.id }
