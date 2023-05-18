@@ -17,5 +17,5 @@ O foco do projeto é gerencias locais onde o usuário pode ou não ter acesso.
 - [x] Criação de rotas de api
 - [x] Validações básicas de formulário
 - [x] Reponsividade para dispositivos móveis
-- [ ] Verificaçao de sessao via rotas
+- [x] Verificaçao de sessao via rotas
 - [ ] Verificar validações com JWT
