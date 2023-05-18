@@ -1,5 +1,4 @@
 import { useSession } from "next-auth/react"
-import { Roboto } from "next/font/google";
 import Head from "next/head";
 import Image from "next/image"
 import { useRouter } from "next/router";
@@ -7,8 +6,6 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import accountDetailsService from "@/services/accounts/accounts.details";
-
-const inter = Roboto({ weight: '400', subsets: ['latin'] })
 
 const styles = {
   span: 'font-bold text-purple-600',
@@ -31,7 +28,7 @@ function Users({ avatarUrl }: InferGetServerSidePropsType<typeof getServerSidePr
   return (
     <>
       <Head><title>Detalhes</title></Head>
-      <div className={`flex items-center justify-center h-screen w-screen bg-gradient-to-br from-cyan-300 to-sky-600 ${inter.className}`}>
+      <div className={`flex items-center justify-center h-screen w-screen bg-gradient-to-br from-cyan-300 to-sky-600`}>
         <main className='bg-white rounded-lg flex flex-col items-center justify-center lg:w-2/6 w-5/6 py-10 gap-2 shadow-2xl'>
           {(!!avatarUrl || !!session?.user?.image) &&
             <Image
