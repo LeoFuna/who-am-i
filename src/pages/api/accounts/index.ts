@@ -3,6 +3,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
 import bcrypt from 'bcrypt';
 import { initMiddleware, parseBody } from '@/utils/core.utils';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 
 // Initialize the cors middleware
 const cors = initMiddleware(
@@ -23,10 +25,13 @@ export const config = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await cors(req, res);
 
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) return res.status(401).json({ message: 'Please log in...' });
+  
   if (req.method === 'GET') {
     const users = await db.user.findMany({});
 
-    return res.json(users);
+    return res.status(200).json(users);
   }
 
   if (req.method === 'POST') {
