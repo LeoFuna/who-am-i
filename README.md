@@ -2,9 +2,9 @@
 > Projeto de Autenticação
 ## Sobre o projeto
 
-Projeto voltado a estudar os conceitos de autenticação, buscando trabalhar com páginas e rotas de api públicas e privadas.
+Projeto voltado a estudar/treinar os conceitos de autenticação, buscando trabalhar com páginas e rotas de api públicas e privadas.
 
-O foco do projeto é gerencias locais onde o usuário pode ou não ter acesso.
+O foco do projeto é gerenciar locais onde o usuário pode ou não ter acesso.
 * [Ferramentas Utilizadas](#ferramentas-utilizadas)
 * [Dependências](#dependências)
 * [Começando](#começando)
